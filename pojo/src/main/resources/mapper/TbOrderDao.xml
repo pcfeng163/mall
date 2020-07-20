@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbOrderDao">
+
+    <resultMap type="com.mall.entity.TbOrder" id="TbOrderMap">
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="totalFee" column="total_fee" jdbcType="INTEGER"/>
+        <result property="actualFee" column="actual_fee" jdbcType="INTEGER"/>
+        <result property="promotionIds" column="promotion_ids" jdbcType="VARCHAR"/>
+        <result property="paymentType" column="payment_type" jdbcType="OTHER"/>
+        <result property="postFee" column="post_fee" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="invoiceType" column="invoice_type" jdbcType="INTEGER"/>
+        <result property="sourceType" column="source_type" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+        <result property="consignTime" column="consign_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="closeTime" column="close_time" jdbcType="TIMESTAMP"/>
+        <result property="commentTime" column="comment_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbOrderMap">
+        select
+          order_id, total_fee, actual_fee, promotion_ids, payment_type, post_fee, user_id, invoice_type, source_type, status, create_time, pay_time, consign_time, end_time, close_time, comment_time, update_time
+        from mall.tb_order
+        where order_id = #{orderId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbOrderMap">
+        select
+          order_id, total_fee, actual_fee, promotion_ids, payment_type, post_fee, user_id, invoice_type, source_type, status, create_time, pay_time, consign_time, end_time, close_time, comment_time, update_time
+        from mall.tb_order
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbOrderMap">
+        select
+          order_id, total_fee, actual_fee, promotion_ids, payment_type, post_fee, user_id, invoice_type, source_type, status, create_time, pay_time, consign_time, end_time, close_time, comment_time, update_time
+        from mall.tb_order
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="totalFee != null">
+                and total_fee = #{totalFee}
+            </if>
+            <if test="actualFee != null">
+                and actual_fee = #{actualFee}
+            </if>
+            <if test="promotionIds != null and promotionIds != ''">
+                and promotion_ids = #{promotionIds}
+            </if>
+            <if test="paymentType != null">
+                and payment_type = #{paymentType}
+            </if>
+            <if test="postFee != null">
+                and post_fee = #{postFee}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="invoiceType != null">
+                and invoice_type = #{invoiceType}
+            </if>
+            <if test="sourceType != null">
+                and source_type = #{sourceType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="payTime != null">
+                and pay_time = #{payTime}
+            </if>
+            <if test="consignTime != null">
+                and consign_time = #{consignTime}
+            </if>
+            <if test="endTime != null">
+                and end_time = #{endTime}
+            </if>
+            <if test="closeTime != null">
+                and close_time = #{closeTime}
+            </if>
+            <if test="commentTime != null">
+                and comment_time = #{commentTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
+        insert into mall.tb_order(total_fee, actual_fee, promotion_ids, payment_type, post_fee, user_id, invoice_type, source_type, status, create_time, pay_time, consign_time, end_time, close_time, comment_time, update_time)
+        values (#{totalFee}, #{actualFee}, #{promotionIds}, #{paymentType}, #{postFee}, #{userId}, #{invoiceType}, #{sourceType}, #{status}, #{createTime}, #{payTime}, #{consignTime}, #{endTime}, #{closeTime}, #{commentTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_order
+        <set>
+            <if test="totalFee != null">
+                total_fee = #{totalFee},
+            </if>
+            <if test="actualFee != null">
+                actual_fee = #{actualFee},
+            </if>
+            <if test="promotionIds != null and promotionIds != ''">
+                promotion_ids = #{promotionIds},
+            </if>
+            <if test="paymentType != null">
+                payment_type = #{paymentType},
+            </if>
+            <if test="postFee != null">
+                post_fee = #{postFee},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="invoiceType != null">
+                invoice_type = #{invoiceType},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime},
+            </if>
+            <if test="consignTime != null">
+                consign_time = #{consignTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="closeTime != null">
+                close_time = #{closeTime},
+            </if>
+            <if test="commentTime != null">
+                comment_time = #{commentTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_order where order_id = #{orderId}
+    </delete>
+
+</mapper>

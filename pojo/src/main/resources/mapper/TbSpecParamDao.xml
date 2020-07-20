@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbSpecParamDao">
+
+    <resultMap type="com.mall.entity.TbSpecParam" id="TbSpecParamMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="cid" column="cid" jdbcType="INTEGER"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="numeric" column="numeric" jdbcType="OTHER"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="generic" column="generic" jdbcType="OTHER"/>
+        <result property="searching" column="searching" jdbcType="OTHER"/>
+        <result property="segments" column="segments" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSpecParamMap">
+        select
+          id, cid, group_id, name, numeric, unit, generic, searching, segments, create_time, update_time
+        from mall.tb_spec_param
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSpecParamMap">
+        select
+          id, cid, group_id, name, numeric, unit, generic, searching, segments, create_time, update_time
+        from mall.tb_spec_param
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSpecParamMap">
+        select
+          id, cid, group_id, name, numeric, unit, generic, searching, segments, create_time, update_time
+        from mall.tb_spec_param
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="cid != null">
+                and cid = #{cid}
+            </if>
+            <if test="groupId != null">
+                and group_id = #{groupId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="numeric != null">
+                and numeric = #{numeric}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="generic != null">
+                and generic = #{generic}
+            </if>
+            <if test="searching != null">
+                and searching = #{searching}
+            </if>
+            <if test="segments != null and segments != ''">
+                and segments = #{segments}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into mall.tb_spec_param(cid, group_id, name, numeric, unit, generic, searching, segments, create_time, update_time)
+        values (#{cid}, #{groupId}, #{name}, #{numeric}, #{unit}, #{generic}, #{searching}, #{segments}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_spec_param
+        <set>
+            <if test="cid != null">
+                cid = #{cid},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="numeric != null">
+                numeric = #{numeric},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="generic != null">
+                generic = #{generic},
+            </if>
+            <if test="searching != null">
+                searching = #{searching},
+            </if>
+            <if test="segments != null and segments != ''">
+                segments = #{segments},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_spec_param where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,24 @@
+{
+  "name" : "SysDept",
+  "comment" : null,
+  "fullColumn" : [ {
+    "name" : "deptId",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "deptName",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.mall.entity",
+  "savePath" : "./pojo/src/main/java/com/mall/entity",
+  "saveModelName" : "pojo"
+}

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbSpuDao">
+
+    <resultMap type="com.mall.entity.TbSpu" id="TbSpuMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="subTitle" column="sub_title" jdbcType="VARCHAR"/>
+        <result property="cid1" column="cid1" jdbcType="INTEGER"/>
+        <result property="cid2" column="cid2" jdbcType="INTEGER"/>
+        <result property="cid3" column="cid3" jdbcType="INTEGER"/>
+        <result property="brandId" column="brand_id" jdbcType="INTEGER"/>
+        <result property="saleable" column="saleable" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSpuMap">
+        select
+          id, name, sub_title, cid1, cid2, cid3, brand_id, saleable, create_time, update_time
+        from mall.tb_spu
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSpuMap">
+        select
+          id, name, sub_title, cid1, cid2, cid3, brand_id, saleable, create_time, update_time
+        from mall.tb_spu
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSpuMap">
+        select
+          id, name, sub_title, cid1, cid2, cid3, brand_id, saleable, create_time, update_time
+        from mall.tb_spu
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="subTitle != null and subTitle != ''">
+                and sub_title = #{subTitle}
+            </if>
+            <if test="cid1 != null">
+                and cid1 = #{cid1}
+            </if>
+            <if test="cid2 != null">
+                and cid2 = #{cid2}
+            </if>
+            <if test="cid3 != null">
+                and cid3 = #{cid3}
+            </if>
+            <if test="brandId != null">
+                and brand_id = #{brandId}
+            </if>
+            <if test="saleable != null">
+                and saleable = #{saleable}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into mall.tb_spu(name, sub_title, cid1, cid2, cid3, brand_id, saleable, create_time, update_time)
+        values (#{name}, #{subTitle}, #{cid1}, #{cid2}, #{cid3}, #{brandId}, #{saleable}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_spu
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="subTitle != null and subTitle != ''">
+                sub_title = #{subTitle},
+            </if>
+            <if test="cid1 != null">
+                cid1 = #{cid1},
+            </if>
+            <if test="cid2 != null">
+                cid2 = #{cid2},
+            </if>
+            <if test="cid3 != null">
+                cid3 = #{cid3},
+            </if>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="saleable != null">
+                saleable = #{saleable},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_spu where id = #{id}
+    </delete>
+
+</mapper>

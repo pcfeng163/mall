@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbApplicationPrivilegeDao">
+
+    <resultMap type="com.mall.entity.TbApplicationPrivilege" id="TbApplicationPrivilegeMap">
+        <result property="serviceId" column="service_id" jdbcType="INTEGER"/>
+        <result property="targetId" column="target_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbApplicationPrivilegeMap">
+        select
+          service_id, target_id, create_time
+        from mall.tb_application_privilege
+        where service_id = #{serviceId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbApplicationPrivilegeMap">
+        select
+          service_id, target_id, create_time
+        from mall.tb_application_privilege
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbApplicationPrivilegeMap">
+        select
+          service_id, target_id, create_time
+        from mall.tb_application_privilege
+        <where>
+            <if test="serviceId != null">
+                and service_id = #{serviceId}
+            </if>
+            <if test="targetId != null">
+                and target_id = #{targetId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="serviceId" useGeneratedKeys="true">
+        insert into mall.tb_application_privilege(create_time)
+        values (#{createTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_application_privilege
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where service_id = #{serviceId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_application_privilege where service_id = #{serviceId}
+    </delete>
+
+</mapper>

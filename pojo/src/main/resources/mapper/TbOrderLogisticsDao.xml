@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbOrderLogisticsDao">
+
+    <resultMap type="com.mall.entity.TbOrderLogistics" id="TbOrderLogisticsMap">
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="logisticsNumber" column="logistics_number" jdbcType="VARCHAR"/>
+        <result property="logisticsCompany" column="logistics_company" jdbcType="VARCHAR"/>
+        <result property="addressee" column="addressee" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="district" column="district" jdbcType="VARCHAR"/>
+        <result property="street" column="street" jdbcType="VARCHAR"/>
+        <result property="postcode" column="postcode" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbOrderLogisticsMap">
+        select
+          order_id, logistics_number, logistics_company, addressee, phone, province, city, district, street, postcode, create_time, update_time
+        from mall.tb_order_logistics
+        where order_id = #{orderId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbOrderLogisticsMap">
+        select
+          order_id, logistics_number, logistics_company, addressee, phone, province, city, district, street, postcode, create_time, update_time
+        from mall.tb_order_logistics
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbOrderLogisticsMap">
+        select
+          order_id, logistics_number, logistics_company, addressee, phone, province, city, district, street, postcode, create_time, update_time
+        from mall.tb_order_logistics
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="logisticsNumber != null and logisticsNumber != ''">
+                and logistics_number = #{logisticsNumber}
+            </if>
+            <if test="logisticsCompany != null and logisticsCompany != ''">
+                and logistics_company = #{logisticsCompany}
+            </if>
+            <if test="addressee != null and addressee != ''">
+                and addressee = #{addressee}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="province != null and province != ''">
+                and province = #{province}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="district != null and district != ''">
+                and district = #{district}
+            </if>
+            <if test="street != null and street != ''">
+                and street = #{street}
+            </if>
+            <if test="postcode != null">
+                and postcode = #{postcode}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
+        insert into mall.tb_order_logistics(logistics_number, logistics_company, addressee, phone, province, city, district, street, postcode, create_time, update_time)
+        values (#{logisticsNumber}, #{logisticsCompany}, #{addressee}, #{phone}, #{province}, #{city}, #{district}, #{street}, #{postcode}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_order_logistics
+        <set>
+            <if test="logisticsNumber != null and logisticsNumber != ''">
+                logistics_number = #{logisticsNumber},
+            </if>
+            <if test="logisticsCompany != null and logisticsCompany != ''">
+                logistics_company = #{logisticsCompany},
+            </if>
+            <if test="addressee != null and addressee != ''">
+                addressee = #{addressee},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="province != null and province != ''">
+                province = #{province},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="district != null and district != ''">
+                district = #{district},
+            </if>
+            <if test="street != null and street != ''">
+                street = #{street},
+            </if>
+            <if test="postcode != null">
+                postcode = #{postcode},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_order_logistics where order_id = #{orderId}
+    </delete>
+
+</mapper>

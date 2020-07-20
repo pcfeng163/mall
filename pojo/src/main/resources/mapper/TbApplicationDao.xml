@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbApplicationDao">
+
+    <resultMap type="com.mall.entity.TbApplication" id="TbApplicationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="serviceName" column="service_name" jdbcType="VARCHAR"/>
+        <result property="secret" column="secret" jdbcType="VARCHAR"/>
+        <result property="info" column="info" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbApplicationMap">
+        select
+          id, service_name, secret, info, create_time, update_time
+        from mall.tb_application
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbApplicationMap">
+        select
+          id, service_name, secret, info, create_time, update_time
+        from mall.tb_application
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbApplicationMap">
+        select
+          id, service_name, secret, info, create_time, update_time
+        from mall.tb_application
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="serviceName != null and serviceName != ''">
+                and service_name = #{serviceName}
+            </if>
+            <if test="secret != null and secret != ''">
+                and secret = #{secret}
+            </if>
+            <if test="info != null and info != ''">
+                and info = #{info}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into mall.tb_application(service_name, secret, info, create_time, update_time)
+        values (#{serviceName}, #{secret}, #{info}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_application
+        <set>
+            <if test="serviceName != null and serviceName != ''">
+                service_name = #{serviceName},
+            </if>
+            <if test="secret != null and secret != ''">
+                secret = #{secret},
+            </if>
+            <if test="info != null and info != ''">
+                info = #{info},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_application where id = #{id}
+    </delete>
+
+</mapper>

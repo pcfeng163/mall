@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.dao.TbSpuDetailDao">
+
+    <resultMap type="com.mall.entity.TbSpuDetail" id="TbSpuDetailMap">
+        <result property="spuId" column="spu_id" jdbcType="INTEGER"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="genericSpec" column="generic_spec" jdbcType="VARCHAR"/>
+        <result property="specialSpec" column="special_spec" jdbcType="VARCHAR"/>
+        <result property="packingList" column="packing_list" jdbcType="VARCHAR"/>
+        <result property="afterService" column="after_service" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbSpuDetailMap">
+        select
+          spu_id, description, generic_spec, special_spec, packing_list, after_service, create_time, update_time
+        from mall.tb_spu_detail
+        where spu_id = #{spuId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbSpuDetailMap">
+        select
+          spu_id, description, generic_spec, special_spec, packing_list, after_service, create_time, update_time
+        from mall.tb_spu_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbSpuDetailMap">
+        select
+          spu_id, description, generic_spec, special_spec, packing_list, after_service, create_time, update_time
+        from mall.tb_spu_detail
+        <where>
+            <if test="spuId != null">
+                and spu_id = #{spuId}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="genericSpec != null and genericSpec != ''">
+                and generic_spec = #{genericSpec}
+            </if>
+            <if test="specialSpec != null and specialSpec != ''">
+                and special_spec = #{specialSpec}
+            </if>
+            <if test="packingList != null and packingList != ''">
+                and packing_list = #{packingList}
+            </if>
+            <if test="afterService != null and afterService != ''">
+                and after_service = #{afterService}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="spuId" useGeneratedKeys="true">
+        insert into mall.tb_spu_detail(description, generic_spec, special_spec, packing_list, after_service, create_time, update_time)
+        values (#{description}, #{genericSpec}, #{specialSpec}, #{packingList}, #{afterService}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall.tb_spu_detail
+        <set>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="genericSpec != null and genericSpec != ''">
+                generic_spec = #{genericSpec},
+            </if>
+            <if test="specialSpec != null and specialSpec != ''">
+                special_spec = #{specialSpec},
+            </if>
+            <if test="packingList != null and packingList != ''">
+                packing_list = #{packingList},
+            </if>
+            <if test="afterService != null and afterService != ''">
+                after_service = #{afterService},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where spu_id = #{spuId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall.tb_spu_detail where spu_id = #{spuId}
+    </delete>
+
+</mapper>
